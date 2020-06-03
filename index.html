@@ -513,7 +513,7 @@ var lines = ['line1', 'line2', 'line3', 'line4', 'line5'];
 for (var line of lines) {
     (function (line) {
         line = '#' + line;
-        $(line + ' button').on('click', function () {
+        function search() {
             var country = 'Беларусь';
             var vobl = $(line + ' .vobl').val();
             var rajon = $(line + ' .rajon').val();
@@ -553,6 +553,12 @@ for (var line of lines) {
                     $(line + ' .alert').addClass('alert-warning');
                 }
             })
+        }
+        $(line + ' button').on('click', search);
+        $(line + ' input').on('keypress', function (e) {
+            if(e.which == 13) {
+                search();
+            }
         });
     })(line);
 }
