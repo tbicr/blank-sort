@@ -512,10 +512,10 @@ function getNumNominatium(item) {
     return {parts: [div[1], div[2]].filter(item => item).join(', '), num: div[0]};
 }
 
-var lines = ['line1', 'line2', 'line3', 'line4', 'line5'];
-for (var line of lines) {
-    (function (line) {
-        line = '#' + line;
+var lines = [1, 2, 3, 4, 5];
+for (var i of lines) {
+    (function (i) {
+        var line = '#line' + i.toString();
         function search() {
             var country = 'Беларусь';
             var vobl = $(line + ' .vobl').val();
@@ -536,6 +536,19 @@ for (var line of lines) {
             ).then(response => response.json()).then(function (data) {
                 console.log(data);
                 var html = '';
+                fetch('http://ec2-18-191-97-58.us-east-2.compute.amazonaws.com/geocode-log', {
+                  method: 'POST',
+                  body: JSON.stringify({
+                    form: i,
+                    country: country,
+                    state: vobl,
+                    county: rajon,
+                    city: miesta,
+                    street: vulica,
+                    house: dom,
+                    regions: data.map(item => getNumNominatium(item).num),
+                  })
+                })
                 data.map(item => html += '' +
                     '<div class="row">' +
                     '    <div class="col-8">' +
@@ -563,7 +576,7 @@ for (var line of lines) {
                 search();
             }
         });
-    })(line);
+    })(i);
 }
 
 $('#reset').on('click', function () {
