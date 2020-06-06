@@ -536,7 +536,7 @@ for (var i of lines) {
             ).then(response => response.json()).then(function (data) {
                 console.log(data);
                 var html = '';
-                fetch('http://ec2-18-191-97-58.us-east-2.compute.amazonaws.com/geocode-log', {
+                fetch('https://belapi.ew.r.appspot.com/geocode-log', {
                   method: 'POST',
                   body: JSON.stringify({
                     form: i,
